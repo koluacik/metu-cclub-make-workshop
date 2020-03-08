@@ -1,0 +1,3 @@
+materyal/*.o
+sunu/make_sunu.*
+!sunu/make_sunu.tex

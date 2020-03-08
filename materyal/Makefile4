@@ -1,0 +1,39 @@
+# Makefile3'e ek olarak phony targets, - ve @
+
+FLAGS = -ansi -Wall -pedantic-errors -g -O0
+
+OBJECTS = main.o lib2.o lib1.o lib21.o lib22.o
+
+# dizinde clean diye bir dosya varsa bile clean kuralı çalışacaktır.
+.PHONY: clean
+
+main: $(OBJECTS)
+	gcc -o main $(OBJECTS)
+
+main.o: main.c lib2.h lib1.h
+	gcc $(FLAGS) -c -o main.o main.c
+
+lib21.o: lib21.c lib21.h
+	gcc $(FLAGS) -c -o lib21.o lib21.c
+	
+lib22.o: lib22.c lib22.h
+	gcc $(FLAGS) -c -o lib22.o lib22.c
+
+# lib2 de lib21 ve lib22 deki fonksiyonlar kullanıldığı için
+# bu dosyaların headerlarındaki değişikliklerde lib2 yi tekrar
+# derlemek daha iyi bir fikir olabilirdi.
+lib2.o: lib2.h lib2.c
+	gcc $(FLAGS) -c -o lib2.o lib2.c
+
+lib1.o: lib1.h lib1.c
+	gcc $(FLAGS) -c -o lib1.o lib1.c
+
+
+# @ başında bulunduğu satırdaki komutun stdout'a yazdırılmasını engeller
+# - başında bulunduğu satırdaki komutun bir hatayla karşılaşması durumunda
+#   tarife devam eder.
+clean:
+	@echo "deleting the executable and the object files"
+	-rm main
+	-rm *.o
+	

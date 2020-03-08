@@ -1,0 +1,26 @@
+# En basit makefile örneği + compiler flagleri için variablelar
+
+FLAGS = -ansi -Wall -pedantic-errors -g -O0
+
+OBJECTS = main.o lib2.o lib1.o lib21.o lib22.o
+
+main: $(OBJECTS)
+	gcc -o main $(OBJECTS)
+
+main.o: main.c lib2.h lib1.h
+	gcc $(FLAGS) -c -o main.o main.c
+
+lib21.o: lib21.c lib21.h
+	gcc $(FLAGS) -c -o lib21.o lib21.c
+	
+lib22.o: lib22.c lib22.h
+	gcc $(FLAGS) -c -o lib22.o lib22.c
+
+# lib2 de lib21 ve lib22 deki fonksiyonlar kullanıldığı için
+# bu dosyaların headerlarındaki değişikliklerde lib2 yi tekrar
+# derlemek daha iyi bir fikir olabilirdi.
+lib2.o: lib2.h lib2.c
+	gcc $(FLAGS) -c -o lib2.o lib2.c
+
+lib1.o: lib1.h lib1.c
+	gcc $(FLAGS) -c -o lib1.o lib1.c

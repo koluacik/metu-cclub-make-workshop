@@ -1,0 +1,32 @@
+# Implicit variables/rules
+
+# Implicit rule'larda bu variable otomatik olarak kullanılıyor.
+CFLAGS = -ansi -Wall -pedantic-errors -g -O0
+
+# Bunu yapmamız gerekmiyor.
+CC = gcc 
+
+OBJECTS = main.o lib2.o lib1.o lib21.o lib22.o
+
+.PHONY: clean
+
+# make linkleme ve derleme işlemlerini verili prerequisitelerden
+# (hatta prerequisite ve target olmadan bile) kuralı türetebilir.
+
+main: $(OBJECTS)
+
+main.o: main.c lib2.h lib1.h
+
+lib21.o: lib21.c lib21.h
+
+lib22.o: lib22.c lib22.h
+
+lib2.o: lib2.h lib2.c
+
+lib1.o: lib1.h lib1.c
+
+clean:
+	@echo "deleting the executable and the object files"
+	-rm main
+	-rm *.o
+	

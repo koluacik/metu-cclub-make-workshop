@@ -1,0 +1,22 @@
+# En basit makefile örneği
+
+main: main.o lib2.o lib1.o lib21.o lib22.o
+	gcc -o main main.o lib2.o lib1.o lib21.o lib22.o
+
+main.o: main.c lib2.h lib1.h
+	gcc -c -o main.o main.c
+
+lib21.o: lib21.c lib21.h
+	gcc -c -o lib21.o lib21.c
+	
+lib22.o: lib22.c lib22.h
+	gcc -c -o lib22.o lib22.c
+
+# lib2 de lib21 ve lib22 deki fonksiyonlar kullanıldığı için
+# bu dosyaların headerlarındaki değişikliklerde lib2 yi tekrar
+# derlemek daha iyi bir fikir olabilirdi.
+lib2.o: lib2.h lib2.c
+	gcc -c -o lib2.o lib2.c
+
+lib1.o: lib1.h lib1.c
+	gcc -c -o lib1.o lib1.c

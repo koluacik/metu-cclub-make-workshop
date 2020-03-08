@@ -1,0 +1,28 @@
+# Static Pattern Rules
+
+CFLAGS = -ansi -Wall -pedantic-errors -g -O0
+CC = gcc 
+
+# OBJECTS variable ını oluşturmak için libobj
+OBJECTS = main.o lib2.o lib1.o lib21.o lib22.o
+PLIBOBJ = lib1.o lib21.o lib22.o
+
+.PHONY: clean
+
+main: $(OBJECTS)
+
+# sadece bazı targetlar için geçerli pattern rule'lar
+
+$(PLIBOBJ) : %.o: %.c %.h
+	@echo "making $@"
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+lib2.o: lib2.c lib2.h lib21.h lib22.h
+
+main.o: main.c lib1.h lib2.h lib21.h lib22.h
+
+clean:
+	@echo "deleting the executable and the object files"
+	-rm main
+	-rm *.o
+	

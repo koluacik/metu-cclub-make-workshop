@@ -1,0 +1,27 @@
+# Pattern rules
+
+CFLAGS = -ansi -Wall -pedantic-errors -g -O0
+CC = gcc 
+OBJECTS = main.o lib2.o lib1.o lib21.o lib22.o
+
+.PHONY: clean
+
+main: $(OBJECTS)
+
+# önceki Makefile'da tekrar eden benzer kuralları genneleyebiliriz.
+# target ve prereq vermeden implicit rule türettiğimizde .o dosyalarının
+# .h dosyalarına bağlı olması özelliğini kaybediyorduk. Her .o dosyası
+# için target ve prereq satırı yazmaksa tarif kendiliğinden türetilse bile
+# çok uzun bir işlem oluyor. Pattern rule ile target ve prereq için
+# bir pattern belirleyip kuralı implicit olarak türettirebiliriz.
+# Ancak bu sefer de kullandığımız yöntem fazla genel olduğu için
+# bazı .o dosyalarının birden çok .h dosyasına bağlı
+# olması özelliğini kaybetmiş olduk.
+
+%.o: %.c %.h
+
+clean:
+	@echo "deleting the executable and the object files"
+	-rm main
+	-rm *.o
+	
